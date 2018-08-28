@@ -9,7 +9,9 @@
     
     <color name="lightish_blue">#3574fa</color>
     <color name="apple_green">#7ed321</color>
-    
+    <color name="medium_grey">#666664</color>
+    <color name="dark_sky_blue">#4a90e2</color>
+
     <color name="btn_color_enabled">@color/apple_green</color>
     <color name="btn_color_disabled">#eaeaea</color>
 
