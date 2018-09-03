@@ -1,27 +1,27 @@
 package com.snik.loftmoney;
 
 public class Item {
+    public static final String TYPE_EXPENSE = "expense";
+    public static final String TYPE_INCOME = "income";
+    private int id;
     private String name;
-    private String price;
+    private int price;
 
-    Item(String name, String price) {
+    Item(int id, String name, int price) {
+        this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrice() {
+    public int getPrice() {
         return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 }
