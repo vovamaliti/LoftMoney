@@ -33,6 +33,7 @@ public class App extends Application {
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://small-dawn-4021.getsandbox.com")
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(Api.class);
