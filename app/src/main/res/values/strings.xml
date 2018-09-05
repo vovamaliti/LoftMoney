@@ -12,6 +12,7 @@
     <string name="main_tab_incomes">@string/incomes</string>
     <string name="main_tab_expenses">@string/expenses</string>
     <string name="main_tab_balance">@string/balance</string>
+    <string name="main_screen_title">Учет Бюджета</string>
 
     <string-array name="main_tabs">
         <item>@string/incomes</item>
