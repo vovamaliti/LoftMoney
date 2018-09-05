@@ -28,9 +28,6 @@ public class App extends Application {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://small-dawn-4021.getsandbox.com")
                 .client(okHttpClient)
