@@ -13,6 +13,14 @@ import android.view.ViewGroup;
  */
 public class BalanceFragment extends Fragment {
 
+    public static BalanceFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        BalanceFragment fragment = new BalanceFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public BalanceFragment() {
         // Required empty public constructor
