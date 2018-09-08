@@ -50,7 +50,7 @@ public class ItemsFragment extends Fragment {
     private String type;
     private Api api;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton floatingActionButton;
+//    private FloatingActionButton floatingActionButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,15 +91,15 @@ public class ItemsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        floatingActionButton = view.findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), AddActivity.class);
-                intent.putExtra(AddActivity.KEY_TYPE, type);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
+//        floatingActionButton = view.findViewById(R.id.fab);
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(requireContext(), AddActivity.class);
+//                intent.putExtra(AddActivity.KEY_TYPE, type);
+//                startActivityForResult(intent, REQUEST_CODE);
+//            }
+//        });
     }
 
     @Override
@@ -137,8 +137,10 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            Item item =  data.getParcelableExtra(AddActivity.KEY_ITEM);
-            adapter.addItem(item);
+            Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
+            if (item.getType().equals(type)) {
+                adapter.addItem(item);
+            }
         }
     }
 }

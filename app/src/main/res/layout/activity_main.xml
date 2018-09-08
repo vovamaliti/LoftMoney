@@ -39,5 +39,15 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v4.view.ViewPager>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#ff9e57"
+        android:src="@drawable/ic_add_black_24dp"
+        app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>
