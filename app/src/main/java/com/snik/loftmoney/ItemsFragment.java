@@ -225,7 +225,7 @@ public class ItemsFragment extends Fragment {
         private void showConfirmationDialog() {
             ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
             dialog.show(getFragmentManager(), null);
-            dialog.setListener(new ConfirmDeleteFragment.Listener() {
+            dialog.setListener(new ConfirmDeleteFragment    .Listener() {
                 @Override
                 public void onDeleteConfirmed() {
                     removeSelectedItem();

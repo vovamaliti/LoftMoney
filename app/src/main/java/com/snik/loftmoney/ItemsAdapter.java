@@ -72,21 +72,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
-//    public List<Integer> getSelectedItems() {
-//        List<Integer> selected = new ArrayList<>();
-//        for (int i = 0; i <getItemCount() ; i++) {
-//            if (selections.get(i)){
-//                selected.add(i);
-//            }
-//        }
-//        return selected;
-//    }
-//
-//    public void removeItem(int position) {
-//        items.remove(position);
-//        notifyItemRemoved(position);
-//    }
-
     List<Integer> getSelectedItems() {
         List<Integer> items = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
