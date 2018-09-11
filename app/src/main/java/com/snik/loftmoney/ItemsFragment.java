@@ -1,19 +1,26 @@
 package com.snik.loftmoney;
 
 
-import android.app.Application;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -50,7 +57,16 @@ public class ItemsFragment extends Fragment {
     private String type;
     private Api api;
     private SwipeRefreshLayout swipeRefreshLayout;
-//    private FloatingActionButton floatingActionButton;
+    private ActionModeCallback actionModeCallback;
+    private Toolbar toolbar;
+    private ActionMode mode;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        toolbar = ((MainActivity) getActivity()).getToolbar();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +77,7 @@ public class ItemsFragment extends Fragment {
 
         api = ((App) getActivity().getApplication()).getApi();
         adapter = new ItemsAdapter();
+        adapter.setItemsAdapterListener(new AdapterListener());
         loadItems();
     }
 
@@ -91,15 +108,7 @@ public class ItemsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-//        floatingActionButton = view.findViewById(R.id.fab);
-//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(requireContext(), AddActivity.class);
-//                intent.putExtra(AddActivity.KEY_TYPE, type);
-//                startActivityForResult(intent, REQUEST_CODE);
-//            }
-//        });
+
     }
 
     @Override
@@ -143,4 +152,94 @@ public class ItemsFragment extends Fragment {
             }
         }
     }
+
+    class AdapterListener implements ItemsAdapterListener {
+
+        @Override
+        public void onItemClick(Item item, int position) {
+            Log.i(TAG, "onItemClick: name" + item.getName() + "position" + position);
+            if (mode == null) {
+                return;
+            }
+            toggleItem(position);
+        }
+
+        @Override
+        public void onItemLongClick(Item item, int position) {
+            Log.i(TAG, "onItemLongClick: name" + item.getName() + "position" + position);
+
+            if (mode != null) {
+                return;
+            }
+            ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionModeCallback());
+            toggleItem(position);
+
+
+        }
+
+        private void toggleItem(int position) {
+            adapter.toogleItem(position);
+        }
+    }
+
+
+    private void removeSelectedItem() {
+        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+            adapter.removeItem(adapter.getSelectedItems().get(i));
+        }
+        mode.finish();
+    }
+
+    class ActionModeCallback implements ActionMode.Callback {
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            Log.i(TAG, "onCreateActionMode: ");
+            mode = actionMode;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            MenuInflater inflater = new MenuInflater(requireContext());
+            inflater.inflate(R.menu.menu_action_mode, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            if (menuItem.getItemId() == R.id.menu_item_delete) {
+                showConfirmationDialog();
+                return true;
+            }
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            adapter.clearSelections();
+            mode = null;
+        }
+
+        private void showConfirmationDialog() {
+            ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
+            dialog.show(getFragmentManager(), null);
+            dialog.setListener(new ConfirmDeleteFragment.Listener() {
+                @Override
+                public void onDeleteConfirmed() {
+                    removeSelectedItem();
+                    Log.i(TAG, "onDeleteConfirmed: ");
+                }
+
+                @Override
+                public void onCancelConfirmed() {
+                    Log.i(TAG, "onCancelConfirmed: ");
+                    mode.finish();
+                }
+            });
+        }
+    }
+
+
 }

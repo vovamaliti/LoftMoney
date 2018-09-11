@@ -2,15 +2,18 @@ package com.snik.loftmoney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -22,6 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private MainPagesAdapter mainPagesAdapter;
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
+    private ActionMode actionMode = null;
+
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    public TabLayout getTabLayout() {
+        return tabLayout;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onDestroy: ");
     }
 
+
     class PageListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
@@ -117,7 +131,35 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int i) {
+            switch (i) {
+                case ViewPager.SCROLL_STATE_DRAGGING:
+                case ViewPager.SCROLL_STATE_SETTLING:
+                        if (actionMode != null){
+                            actionMode.finish();
+                            Log.i(TAG, "onPageScrollStateChanged: " + i);
 
+                        }
+                    break;
+
+            }
         }
+    }
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+        super.onSupportActionModeStarted(mode);
+        floatingActionButton.hide();
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.dark_grey_blue));
+        actionMode = mode;
+
+    }
+
+    @Override
+    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
+        super.onSupportActionModeFinished(mode);
+        floatingActionButton.show();
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary ));
+        actionMode = null;
+
     }
 }

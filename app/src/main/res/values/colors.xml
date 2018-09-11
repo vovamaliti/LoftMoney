@@ -14,9 +14,13 @@
     <color name="apple_green">#7ed321</color>
     <color name="medium_grey">#666664</color>
     <color name="dark_sky_blue">#4a90e2</color>
+    <color name="dark_grey_blue">#333f59</color>
 
     <color name="btn_color_enabled">@color/apple_green</color>
     <color name="btn_color_disabled">#eaeaea</color>
+    <color name="action_mode_color">@color/dark_grey_blue</color>
+    <color name="item_background_selected">#f2f2f2</color>
+    <color name="item_background_default">@color/white</color>
 
 
 </resources>
