@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public TabLayout getTabLayout() {
-        return tabLayout;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: ");
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tab_layout);
-        mainPagesAdapter = new MainPagesAdapter(getSupportFragmentManager(), this);
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(mainPagesAdapter);
         viewPager.addOnPageChangeListener(new PageListener());
         tabLayout.setupWithViewPager(viewPager);
         floatingActionButton = findViewById(R.id.fab);
@@ -84,30 +79,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
-
 
     class PageListener implements ViewPager.OnPageChangeListener {
         @Override
@@ -134,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
             switch (i) {
                 case ViewPager.SCROLL_STATE_DRAGGING:
                 case ViewPager.SCROLL_STATE_SETTLING:
-                        if (actionMode != null){
-                            actionMode.finish();
-                            Log.i(TAG, "onPageScrollStateChanged: " + i);
+                    if (actionMode != null) {
+                        actionMode.finish();
+                        Log.i(TAG, "onPageScrollStateChanged: " + i);
 
-                        }
+                    }
                     break;
 
             }
@@ -158,8 +129,28 @@ public class MainActivity extends AppCompatActivity {
     public void onSupportActionModeFinished(@NonNull ActionMode mode) {
         super.onSupportActionModeFinished(mode);
         floatingActionButton.show();
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary ));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         actionMode = null;
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+
+        if (((App) getApplication()).isLoggedIn()) {
+            initUi();
+        } else {
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void initUi() {
+            MainPagesAdapter adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
+            viewPager.setAdapter(adapter);
 
     }
 }

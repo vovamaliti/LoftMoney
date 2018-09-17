@@ -1,9 +1,7 @@
 package com.snik.loftmoney;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -72,17 +70,42 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
-    List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<>(selections.size());
-        for (int i = 0; i < selections.size(); i++) {
-            items.add(selections.keyAt(i));
+//    List<Integer> getSelectedItems() {
+//        List<Integer> items = new ArrayList<>(selections.size());
+//        for (int i = 0; i < selections.size(); i++) {
+//            items.add(selections.keyAt(i));
+//        }
+//        return items;
+//    }
+
+
+    public List<String> getSelectedItems() {
+        List<String> selected = new ArrayList<>();
+        for (int i = 0; i < getItemCount(); i++) {
+            if (selections.get(i)){
+                selected.add(String.valueOf(items.get(i).getId()));
+            }
         }
-        return items;
+        return selected;
     }
 
-    void removeItem(int pos) {
-        items.remove(pos);
-        notifyItemRemoved(pos);
+//    void removeItem(int pos) {
+//        items.remove(pos);
+//        notifyItemRemoved(pos);
+//    }
+
+    public void removeItem(String selected) {
+        for (Item item : items) {
+            if (selected.equals(item.getId())) {
+                items.remove(item);
+//                break;
+//                notifyItemRemoved(items.indexOf(item));
+
+            }
+        }
+//        notifyItemRemoved(0);
+        notifyDataSetChanged();
+
     }
 
 

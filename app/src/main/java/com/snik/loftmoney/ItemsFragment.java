@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -141,6 +141,25 @@ public class ItemsFragment extends Fragment {
         });
     }
 
+    private void addItem(final Item item) {
+        Call<AddItemResult> call = api.addItem(item.getPrice(), item.getName(), item.getType());
+        call.enqueue(new Callback<AddItemResult>() {
+            @Override
+            public void onResponse(Call<AddItemResult> call, Response<AddItemResult> response) {
+                AddItemResult result = response.body();
+                if (result.status.equals("success")) {
+                    adapter.addItem(item);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddItemResult> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -148,7 +167,7 @@ public class ItemsFragment extends Fragment {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
             if (item.getType().equals(type)) {
-                adapter.addItem(item);
+                addItem(item);
             }
         }
     }
@@ -183,9 +202,50 @@ public class ItemsFragment extends Fragment {
     }
 
 
+//    private void removeSelectedItem() {
+//            for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+//                Item item = adapter.removeItem(adapter.getSelectedItems().get(i));
+//                Call<RemoveItemResult> call = api.removeItem(item.getId());
+//                call.enqueue(new Callback<RemoveItemResult>() {
+//                    @Override
+//                    public void onResponse(Call<RemoveItemResult> call, Response<RemoveItemResult> response) {
+//                            RemoveItemResult result = response.body();
+//                            if (result.status.equals("success")){
+//                                Toast.makeText(getContext(), "Removed Successfully!", Toast.LENGTH_SHORT).show();
+//                            }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<RemoveItemResult> call, Throwable t) {
+//
+//                    }
+//                });
+//
+//            }
+//
+//        mode.finish();
+//    }
+
     private void removeSelectedItem() {
-        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
-            adapter.removeItem(adapter.getSelectedItems().get(i));
+        final List<String> selected = adapter.getSelectedItems();
+        for (int i = 0; i < selected.size(); i++) {
+            Call<RemoveItemResult> call = api.removeItem(Integer.parseInt(selected.get(i)));
+            call.enqueue(new Callback<RemoveItemResult>() {
+                @Override
+                public void onResponse(Call<RemoveItemResult> call, Response<RemoveItemResult> response) {
+                    RemoveItemResult result = response.body();
+                    if (result.status.equals("success")) {
+                        adapter.removeItem(String.valueOf(response.body().getId()));
+                        Toast.makeText(getContext(), "Removed Successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RemoveItemResult> call, Throwable t) {
+
+                }
+            });
+
         }
         mode.finish();
     }
@@ -225,16 +285,14 @@ public class ItemsFragment extends Fragment {
         private void showConfirmationDialog() {
             ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
             dialog.show(getFragmentManager(), null);
-            dialog.setListener(new ConfirmDeleteFragment    .Listener() {
+            dialog.setListener(new ConfirmDeleteFragment.Listener() {
                 @Override
                 public void onDeleteConfirmed() {
                     removeSelectedItem();
-                    Log.i(TAG, "onDeleteConfirmed: ");
                 }
 
                 @Override
                 public void onCancelConfirmed() {
-                    Log.i(TAG, "onCancelConfirmed: ");
                     mode.finish();
                 }
             });
