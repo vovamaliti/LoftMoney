@@ -70,11 +70,6 @@ public class ItemsFragment extends Fragment {
     private ActionMode mode;
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Toolbar toolbar = ((MainActivity) getActivity()).getToolbar();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
