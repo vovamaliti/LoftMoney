@@ -1,15 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".BalanceFragment">
+    android:background="@color/white"
+    tools:context=".Fragment.BalanceFragment"
+    tools:layout_editor_absoluteY="25dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/balance"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
+        <TextView
+            android:id="@+id/balance_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="36dp"
+            android:textSize="14sp"
+            android:text="@string/available_finances"
+            android:textColor="@color/medium_grey" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="54dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/pale_orange"
+            android:textSize="48sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/expense_income"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintTop_toBottomOf="@id/balance">
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/first_view"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/white_six"
+        app:layout_constraintBottom_toBottomOf="@id/expense_income"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/balance" />
+
+    <View
+        android:id="@+id/second_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white_six"
+        app:layout_constraintBottom_toBottomOf="@id/expense_income"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expense_income" />
+
+    <View
+        android:id="@+id/third_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white_six"
+        app:layout_constraintBottom_toTopOf="@id/expense_income"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/balance" />
+
+    <TextView
+        android:id="@+id/expenseDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/expense"
+        android:textColor="@color/medium_grey"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_view"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/expenseSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="42dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/lightish_blue"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_view" />
+
+    <TextView
+        android:id="@+id/incomeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/income"
+        android:textColor="@color/medium_grey"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/first_view"
+        app:layout_constraintTop_toBottomOf="@id/third_view"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/incomeSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="42dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/apple_green"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/first_view"
+        app:layout_constraintTop_toBottomOf="@id/third_view" />
+
+    <com.snik.loftmoney.VIew.DiagramView
+        android:id="@+id/diagram_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="108dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.325"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

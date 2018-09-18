@@ -1,4 +1,4 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.snik.loftmoney.Model.Item;
+import com.snik.loftmoney.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +33,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     public void addItem(Item item) {
         this.items.add(item);
         notifyItemInserted(items.size() - 1);
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     @NonNull
@@ -70,43 +77,19 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
-//    List<Integer> getSelectedItems() {
-//        List<Integer> items = new ArrayList<>(selections.size());
-//        for (int i = 0; i < selections.size(); i++) {
-//            items.add(selections.keyAt(i));
-//        }
-//        return items;
-//    }
-
-
-    public List<String> getSelectedItems() {
-        List<String> selected = new ArrayList<>();
-        for (int i = 0; i < getItemCount(); i++) {
-            if (selections.get(i)){
-                selected.add(String.valueOf(items.get(i).getId()));
-            }
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<>(selections.size());
+        for (int i = 0; i < selections.size(); i++) {
+            items.add(selections.keyAt(i));
         }
-        return selected;
+        return items;
     }
 
-//    void removeItem(int pos) {
-//        items.remove(pos);
-//        notifyItemRemoved(pos);
-//    }
-
-    public void removeItem(String selected) {
-        for (Item item : items) {
-            if (selected.equals(item.getId())) {
-                items.remove(item);
-//                break;
-//                notifyItemRemoved(items.indexOf(item));
-
-            }
-        }
-//        notifyItemRemoved(0);
-        notifyDataSetChanged();
-
+    public void remove(int pos) {
+        items.remove(pos);
+        notifyItemRemoved(pos);
     }
+
 
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -122,7 +105,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         void bind(final Item item, final ItemsAdapterListener listener, final int position, final boolean selected) {
             name.setText(item.getName());
-            price.setText(String.valueOf(item.getPrice()));
+            price.setText(String.valueOf(item.getPrice()) + "\t" + "\u20BD");
+            if (item.getType().equals(Item.TYPE_INCOME)) {
+                price.setTextColor(itemView.getContext().getResources().getColor(R.color.apple_green));
+            }
             itemView.setSelected(selected);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

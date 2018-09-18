@@ -1,9 +1,9 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Response;
 
 
 import com.google.gson.annotations.SerializedName;
 
-class AuthResult {
+public class AuthResult {
     public String status;
     public int id;
     @SerializedName("auth_token")

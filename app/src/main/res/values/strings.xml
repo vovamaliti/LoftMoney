@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">LoftMoney</string>
     <string name="incomes">Доходы</string>
+    <string name="income">Доход</string>
     <string name="expenses">Расходы</string>
+    <string name="expense">Расход</string>
     <string name="balance">Баланс</string>
+    <string name="currency">₽</string>
     <!--Add Screen-->
     <string name="add_hint_name">Название</string>
     <string name="add_hint_price">Цена</string>
@@ -20,12 +23,16 @@
         <item>@string/balance</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="menu_item_delete">Удалить</string>
+    <string name="a_you_sure">Вы действительно хотите удалите выделенные элементы?</string>
     <string name="auth_name">LoftMoney</string>
     <string name="sign">Войти</string>
     <string name="version_project">Версия 1.0 2018</string>
+    <string name="available_finances">Доступные финансы</string>
+    <string name="ruble_7000">7000 руб</string>
+    <string name="removed">Removed Successfully!</string>
 
 
 </resources>

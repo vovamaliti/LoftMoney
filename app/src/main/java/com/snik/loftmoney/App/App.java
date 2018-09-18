@@ -1,11 +1,11 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.App;
 
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.snik.loftmoney.Api.Api;
+import com.snik.loftmoney.BuildConfig;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class App extends Application {
-    private static final String TAG = "App";
+
     private static final String PREFERENCES_SESSION = "shared_preferences";
     private static final String AUTH_TOKEN = "auth_token";
 
@@ -81,7 +81,6 @@ public class App extends Application {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
-            Log.i(TAG, "intercept: " + getAuthToken());
             Request originalRequest = chain.request();
             HttpUrl url = originalRequest.url()
                     .newBuilder()

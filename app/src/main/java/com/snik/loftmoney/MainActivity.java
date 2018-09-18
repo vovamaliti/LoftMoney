@@ -11,18 +11,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import com.snik.loftmoney.Adapter.MainPagesAdapter;
+import com.snik.loftmoney.App.App;
+import com.snik.loftmoney.Model.Item;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     public static final int REQUEST_CODE = 100;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private MainPagesAdapter mainPagesAdapter;
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
     private ActionMode actionMode = null;
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate: ");
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
@@ -107,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 case ViewPager.SCROLL_STATE_SETTLING:
                     if (actionMode != null) {
                         actionMode.finish();
-                        Log.i(TAG, "onPageScrollStateChanged: " + i);
-
                     }
                     break;
 
@@ -138,17 +135,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: ");
-
         if (((App) getApplication()).isLoggedIn()) {
-            initUi();
+            init();
         } else {
             Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
         }
     }
 
-    private void initUi() {
+    private void init() {
             MainPagesAdapter adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
             viewPager.setAdapter(adapter);
 

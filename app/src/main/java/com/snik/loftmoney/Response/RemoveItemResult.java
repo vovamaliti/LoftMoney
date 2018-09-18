@@ -1,6 +1,6 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Response;
 
-class RemoveItemResult {
+public class RemoveItemResult {
     public String status;
     public int id;
 

@@ -1,4 +1,4 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,7 +19,7 @@ public class Item implements Parcelable {
         this.type = type;
     }
 
-    Item(String name, int price, String type) {
+    public Item(String name, int price, String type) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -31,6 +31,7 @@ public class Item implements Parcelable {
         price = in.readInt();
         type = in.readString();
     }
+
     public int getId() {
         return id;
     }
@@ -48,7 +49,6 @@ public class Item implements Parcelable {
     }
 
 
-
     public static final Creator<Item> CREATOR = new Creator<Item>() {
         @Override
         public Item createFromParcel(Parcel in) {
@@ -60,7 +60,6 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
-
 
 
     @Override

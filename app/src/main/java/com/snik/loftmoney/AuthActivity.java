@@ -13,9 +13,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.snik.loftmoney.Api.Api;
+import com.snik.loftmoney.App.App;
+import com.snik.loftmoney.Response.AuthResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +26,6 @@ import retrofit2.Response;
 public class AuthActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 99;
-    private static final String TAG = "AuthActivity";
     private GoogleSignInClient mGoogleSignInClient;
     private Api api;
 
@@ -36,10 +37,8 @@ public class AuthActivity extends AppCompatActivity {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        Log.i(TAG, "onCreate: ");
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Button signInButton = findViewById(R.id.sign_in_button);
-//        signIn();
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +58,6 @@ public class AuthActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -71,12 +68,8 @@ public class AuthActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
             Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
             updateUI(null);
         }
@@ -85,7 +78,6 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart: ");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             updateUI(account);
@@ -97,20 +89,16 @@ public class AuthActivity extends AppCompatActivity {
             successMessage("Account is null");
             return;
         }
-        Log.i(TAG, "updateUI: ");
         String id = account.getId();
-        Log.i(TAG, "updateUI: " + id);
         api.auth(id).enqueue(new Callback<AuthResult>() {
             @Override
             public void onResponse(Call<AuthResult> call, Response<AuthResult> response) {
                 AuthResult result = response.body();
-                Log.i(TAG, "onResponse: "+ result.token);
                 ((App) getApplication()).setAuthToken(result.token);
             }
 
             @Override
             public void onFailure(Call<AuthResult> call, Throwable t) {
-                Log.i(TAG, "onFailure: " + t.getMessage());
                 errorMessage("Auth failed!" + t.getMessage());
             }
         });

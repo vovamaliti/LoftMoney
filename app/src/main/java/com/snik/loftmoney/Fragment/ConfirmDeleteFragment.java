@@ -1,4 +1,4 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.snik.loftmoney.R;
+
 public class ConfirmDeleteFragment extends DialogFragment {
     private Listener listener;
 
@@ -15,12 +17,13 @@ public class ConfirmDeleteFragment extends DialogFragment {
         this.listener = listener;
     }
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
-                .setMessage("Вы действительно хотите удалите выделенные элементы?")
-                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+        return new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.a_you_sure)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (listener != null) {
@@ -28,7 +31,7 @@ public class ConfirmDeleteFragment extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (listener != null){
@@ -37,7 +40,6 @@ public class ConfirmDeleteFragment extends DialogFragment {
 
                     }
                 }).create();
-        return alertDialog;
 
 
     }

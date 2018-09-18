@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.snik.loftmoney.Model.Item;
+
+import java.util.Objects;
+
 public class AddActivity extends AppCompatActivity {
     public static final String KEY_TYPE = "type";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_PRICE = "price";
     public static final String KEY_ITEM = "item";
 
     private EditText nameInput;
@@ -29,7 +31,7 @@ public class AddActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.name);
         priceInput = findViewById(R.id.price);
         addBtn = findViewById(R.id.addBtn);
-        final String type = getIntent().getExtras().getString(KEY_TYPE);
+        final String type = Objects.requireNonNull(getIntent().getExtras()).getString(KEY_TYPE);
         TextListener listener = new TextListener();
         nameInput.addTextChangedListener(listener);
         priceInput.addTextChangedListener(listener);

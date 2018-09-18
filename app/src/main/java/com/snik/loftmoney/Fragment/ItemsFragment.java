@@ -1,4 +1,4 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.Fragment;
 
 
 import android.annotation.SuppressLint;
@@ -24,7 +24,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.snik.loftmoney.Adapter.ItemsAdapter;
+import com.snik.loftmoney.Adapter.ItemsAdapterListener;
+import com.snik.loftmoney.AddActivity;
+import com.snik.loftmoney.Api.Api;
+import com.snik.loftmoney.App.App;
+import com.snik.loftmoney.MainActivity;
+import com.snik.loftmoney.Model.Item;
+import com.snik.loftmoney.R;
+import com.snik.loftmoney.Response.RemoveItemResult;
+import com.snik.loftmoney.Response.AddItemResult;
+
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +50,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ItemsFragment extends Fragment {
     public static final int REQUEST_CODE = 100;
-    private static final String TAG = "ItemsFragment";
     public static final String KEY_TYPE = "type";
 
     public static ItemsFragment newInstance(String type) {
@@ -50,29 +61,26 @@ public class ItemsFragment extends Fragment {
     }
 
     public ItemsFragment() {
-        // Required empty public constructor
     }
 
     private ItemsAdapter adapter;
     private String type;
     private Api api;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ActionModeCallback actionModeCallback;
-    private Toolbar toolbar;
     private ActionMode mode;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        toolbar = ((MainActivity) getActivity()).getToolbar();
+        Toolbar toolbar = ((MainActivity) getActivity()).getToolbar();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: ");
         Bundle args = getArguments();
+        assert args != null;
         type = args.getString(KEY_TYPE);
 
         api = ((App) getActivity().getApplication()).getApi();
@@ -84,15 +92,12 @@ public class ItemsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.i(TAG, "onCreateView: ");
         return inflater.inflate(R.layout.fragment_items, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated: ");
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), R.color.apple_green),
@@ -111,17 +116,6 @@ public class ItemsFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i(TAG, "onDestroyView: ");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
 
     public void loadItems() {
         Call<List<Item>> call = api.getItems(type);
@@ -147,6 +141,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onResponse(Call<AddItemResult> call, Response<AddItemResult> response) {
                 AddItemResult result = response.body();
+                assert result != null;
                 if (result.status.equals("success")) {
                     adapter.addItem(item);
                 }
@@ -165,6 +160,7 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            assert data != null;
             Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
             if (item.getType().equals(type)) {
                 addItem(item);
@@ -176,7 +172,6 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onItemClick(Item item, int position) {
-            Log.i(TAG, "onItemClick: name" + item.getName() + "position" + position);
             if (mode == null) {
                 return;
             }
@@ -185,12 +180,10 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onItemLongClick(Item item, int position) {
-            Log.i(TAG, "onItemLongClick: name" + item.getName() + "position" + position);
-
             if (mode != null) {
                 return;
             }
-            ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionModeCallback());
+            ((AppCompatActivity) Objects.requireNonNull(getActivity())).startSupportActionMode(new ActionModeCallback());
             toggleItem(position);
 
 
@@ -202,41 +195,18 @@ public class ItemsFragment extends Fragment {
     }
 
 
-//    private void removeSelectedItem() {
-//            for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
-//                Item item = adapter.removeItem(adapter.getSelectedItems().get(i));
-//                Call<RemoveItemResult> call = api.removeItem(item.getId());
-//                call.enqueue(new Callback<RemoveItemResult>() {
-//                    @Override
-//                    public void onResponse(Call<RemoveItemResult> call, Response<RemoveItemResult> response) {
-//                            RemoveItemResult result = response.body();
-//                            if (result.status.equals("success")){
-//                                Toast.makeText(getContext(), "Removed Successfully!", Toast.LENGTH_SHORT).show();
-//                            }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<RemoveItemResult> call, Throwable t) {
-//
-//                    }
-//                });
-//
-//            }
-//
-//        mode.finish();
-//    }
-
     private void removeSelectedItem() {
-        final List<String> selected = adapter.getSelectedItems();
-        for (int i = 0; i < selected.size(); i++) {
-            Call<RemoveItemResult> call = api.removeItem(Integer.parseInt(selected.get(i)));
+        List<Item> items = adapter.getItems();
+        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+            adapter.remove(i);
+            Call<RemoveItemResult> call = api.removeItem(items.get(i).getId());
             call.enqueue(new Callback<RemoveItemResult>() {
                 @Override
                 public void onResponse(Call<RemoveItemResult> call, Response<RemoveItemResult> response) {
                     RemoveItemResult result = response.body();
+                    assert result != null;
                     if (result.status.equals("success")) {
-                        adapter.removeItem(String.valueOf(response.body().getId()));
-                        Toast.makeText(getContext(), "Removed Successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -247,15 +217,14 @@ public class ItemsFragment extends Fragment {
             });
 
         }
+
         mode.finish();
     }
 
     class ActionModeCallback implements ActionMode.Callback {
 
-        @SuppressLint("ResourceAsColor")
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            Log.i(TAG, "onCreateActionMode: ");
             mode = actionMode;
             return true;
         }
@@ -284,6 +253,7 @@ public class ItemsFragment extends Fragment {
 
         private void showConfirmationDialog() {
             ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
+            assert getFragmentManager() != null;
             dialog.show(getFragmentManager(), null);
             dialog.setListener(new ConfirmDeleteFragment.Listener() {
                 @Override
