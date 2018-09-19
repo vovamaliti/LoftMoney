@@ -1,4 +1,4 @@
-package com.snik.loftmoney.VIew;
+package com.snik.loftmoney.vIew;
 
 import android.content.Context;
 import android.graphics.Canvas;

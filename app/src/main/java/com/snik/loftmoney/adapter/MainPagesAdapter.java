@@ -1,4 +1,4 @@
-package com.snik.loftmoney.Adapter;
+package com.snik.loftmoney.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.snik.loftmoney.Fragment.BalanceFragment;
-import com.snik.loftmoney.Fragment.ItemsFragment;
-import com.snik.loftmoney.Model.Item;
 import com.snik.loftmoney.R;
+import com.snik.loftmoney.fragment.BalanceFragment;
+import com.snik.loftmoney.fragment.ItemsFragment;
+import com.snik.loftmoney.model.Item;
 
 public class MainPagesAdapter extends FragmentPagerAdapter {
 

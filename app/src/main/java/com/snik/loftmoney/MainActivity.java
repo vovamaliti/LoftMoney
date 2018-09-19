@@ -13,9 +13,9 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.snik.loftmoney.Adapter.MainPagesAdapter;
-import com.snik.loftmoney.App.App;
-import com.snik.loftmoney.Model.Item;
+import com.snik.loftmoney.adapter.MainPagesAdapter;
+import com.snik.loftmoney.app.App;
+import com.snik.loftmoney.model.Item;
 
 import java.util.List;
 

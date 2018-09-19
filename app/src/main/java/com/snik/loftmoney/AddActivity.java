@@ -1,8 +1,8 @@
 package com.snik.loftmoney;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.snik.loftmoney.Model.Item;
+import com.snik.loftmoney.model.Item;
 
 import java.util.Objects;
 

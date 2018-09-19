@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Fragment.BalanceFragment"
+    tools:context=".fragment.BalanceFragment"
     tools:layout_editor_absoluteY="25dp">
 
     <RelativeLayout
@@ -129,7 +129,7 @@
         app:layout_constraintStart_toStartOf="@id/first_view"
         app:layout_constraintTop_toBottomOf="@id/third_view" />
 
-    <com.snik.loftmoney.VIew.DiagramView
+    <com.snik.loftmoney.vIew.DiagramView
         android:id="@+id/diagram_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

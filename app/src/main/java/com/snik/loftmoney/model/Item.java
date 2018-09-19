@@ -1,4 +1,4 @@
-package com.snik.loftmoney.Model;
+package com.snik.loftmoney.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

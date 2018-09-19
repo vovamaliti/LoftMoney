@@ -1,8 +1,6 @@
-package com.snik.loftmoney.Fragment;
+package com.snik.loftmoney.fragment;
 
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,16 +20,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.snik.loftmoney.Adapter.ItemsAdapter;
-import com.snik.loftmoney.Adapter.ItemsAdapterListener;
 import com.snik.loftmoney.AddActivity;
-import com.snik.loftmoney.Api.Api;
-import com.snik.loftmoney.App.App;
-import com.snik.loftmoney.MainActivity;
-import com.snik.loftmoney.Model.Item;
 import com.snik.loftmoney.R;
-import com.snik.loftmoney.Response.RemoveItemResult;
-import com.snik.loftmoney.Response.AddItemResult;
+import com.snik.loftmoney.adapter.ItemsAdapter;
+import com.snik.loftmoney.adapter.ItemsAdapterListener;
+import com.snik.loftmoney.api.Api;
+import com.snik.loftmoney.app.App;
+import com.snik.loftmoney.model.Item;
+import com.snik.loftmoney.response.AddItemResult;
+import com.snik.loftmoney.response.RemoveItemResult;
 
 import java.util.List;
 import java.util.Objects;

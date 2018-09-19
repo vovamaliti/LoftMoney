@@ -1,10 +1,9 @@
 package com.snik.loftmoney;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,9 +14,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.snik.loftmoney.Api.Api;
-import com.snik.loftmoney.App.App;
-import com.snik.loftmoney.Response.AuthResult;
+import com.snik.loftmoney.api.Api;
+import com.snik.loftmoney.app.App;
+import com.snik.loftmoney.response.AuthResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;

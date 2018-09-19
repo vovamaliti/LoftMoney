@@ -1,4 +1,4 @@
-package com.snik.loftmoney.Fragment;
+package com.snik.loftmoney.fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

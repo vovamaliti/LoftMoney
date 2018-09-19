@@ -1,4 +1,4 @@
-package com.snik.loftmoney.Fragment;
+package com.snik.loftmoney.fragment;
 
 
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.snik.loftmoney.Api.Api;
-import com.snik.loftmoney.App.App;
-import com.snik.loftmoney.Response.BalanceResult;
-import com.snik.loftmoney.VIew.DiagramView;
 import com.snik.loftmoney.R;
+import com.snik.loftmoney.api.Api;
+import com.snik.loftmoney.app.App;
+import com.snik.loftmoney.response.BalanceResult;
+import com.snik.loftmoney.vIew.DiagramView;
 
 import retrofit2.Call;
 import retrofit2.Callback;

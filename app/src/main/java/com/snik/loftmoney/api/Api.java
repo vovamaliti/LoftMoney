@@ -1,10 +1,10 @@
-package com.snik.loftmoney.Api;
+package com.snik.loftmoney.api;
 
-import com.snik.loftmoney.Response.AddItemResult;
-import com.snik.loftmoney.Response.AuthResult;
-import com.snik.loftmoney.Response.BalanceResult;
-import com.snik.loftmoney.Model.Item;
-import com.snik.loftmoney.Response.RemoveItemResult;
+import com.snik.loftmoney.model.Item;
+import com.snik.loftmoney.response.AddItemResult;
+import com.snik.loftmoney.response.AuthResult;
+import com.snik.loftmoney.response.BalanceResult;
+import com.snik.loftmoney.response.RemoveItemResult;
 
 import java.util.List;
 

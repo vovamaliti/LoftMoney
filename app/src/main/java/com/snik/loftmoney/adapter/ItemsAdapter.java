@@ -1,4 +1,4 @@
-package com.snik.loftmoney.Adapter;
+package com.snik.loftmoney.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.snik.loftmoney.Model.Item;
 import com.snik.loftmoney.R;
+import com.snik.loftmoney.model.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;

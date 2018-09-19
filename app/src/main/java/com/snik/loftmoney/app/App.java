@@ -1,11 +1,10 @@
-package com.snik.loftmoney.App;
+package com.snik.loftmoney.app;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.snik.loftmoney.Api.Api;
 import com.snik.loftmoney.BuildConfig;
+import com.snik.loftmoney.api.Api;
 
 import java.io.IOException;
 
