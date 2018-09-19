@@ -63,6 +63,7 @@ public class ItemsFragment extends Fragment {
     private Api api;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ActionMode mode;
+    private int position;
 
 
 
@@ -186,17 +187,17 @@ public class ItemsFragment extends Fragment {
 
 
     private void removeSelectedItem() {
-        List<Item> items = adapter.getItems();
-        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
-            adapter.remove(i);
-            Call<RemoveItemResult> call = api.removeItem(items.get(i).getId());
+        final List<Integer> selected = adapter.getSelectedItems();
+        for (int i = selected.size() - 1; i >= 0; i--) {
+            position = i;
+            Call<RemoveItemResult> call = api.removeItem(selected.get(i));
             call.enqueue(new Callback<RemoveItemResult>() {
                 @Override
                 public void onResponse(Call<RemoveItemResult> call, Response<RemoveItemResult> response) {
                     RemoveItemResult result = response.body();
-                    assert result != null;
                     if (result.status.equals("success")) {
-                        Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
+                        adapter.remove(position);
+                        Toast.makeText(getContext(), "Removed Successfully!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -207,7 +208,6 @@ public class ItemsFragment extends Fragment {
             });
 
         }
-
         mode.finish();
     }
 
