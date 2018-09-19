@@ -78,11 +78,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     }
 
     public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<>(selections.size());
-        for (int i = 0; i < selections.size(); i++) {
-            items.add(selections.keyAt(i));
+        List<Integer> selected = new ArrayList<>();
+        for (int i = 0; i < getItemCount(); i++) {
+            if (selections.get(i)) {
+                selected.add(i);
+            }
         }
-        return items;
+        return selected;
     }
 
     public void remove(int pos) {
