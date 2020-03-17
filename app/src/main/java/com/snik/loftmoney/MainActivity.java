@@ -11,18 +11,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import com.snik.loftmoney.adapter.MainPagesAdapter;
+import com.snik.loftmoney.app.App;
+import com.snik.loftmoney.model.Item;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     public static final int REQUEST_CODE = 100;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private MainPagesAdapter mainPagesAdapter;
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
     private ActionMode actionMode = null;
@@ -32,20 +32,14 @@ public class MainActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public TabLayout getTabLayout() {
-        return tabLayout;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate: ");
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tab_layout);
-        mainPagesAdapter = new MainPagesAdapter(getSupportFragmentManager(), this);
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(mainPagesAdapter);
         viewPager.addOnPageChangeListener(new PageListener());
         tabLayout.setupWithViewPager(viewPager);
         floatingActionButton = findViewById(R.id.fab);
@@ -84,30 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
-
 
     class PageListener implements ViewPager.OnPageChangeListener {
         @Override
@@ -134,11 +104,9 @@ public class MainActivity extends AppCompatActivity {
             switch (i) {
                 case ViewPager.SCROLL_STATE_DRAGGING:
                 case ViewPager.SCROLL_STATE_SETTLING:
-                        if (actionMode != null){
-                            actionMode.finish();
-                            Log.i(TAG, "onPageScrollStateChanged: " + i);
-
-                        }
+                    if (actionMode != null) {
+                        actionMode.finish();
+                    }
                     break;
 
             }
@@ -158,8 +126,26 @@ public class MainActivity extends AppCompatActivity {
     public void onSupportActionModeFinished(@NonNull ActionMode mode) {
         super.onSupportActionModeFinished(mode);
         floatingActionButton.show();
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary ));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         actionMode = null;
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (((App) getApplication()).isLoggedIn()) {
+            init();
+        } else {
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void init() {
+            MainPagesAdapter adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
+            viewPager.setAdapter(adapter);
 
     }
 }

@@ -1,15 +1,16 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.snik.loftmoney.R;
+import com.snik.loftmoney.model.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +33,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     public void addItem(Item item) {
         this.items.add(item);
         notifyItemInserted(items.size() - 1);
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     @NonNull
@@ -72,18 +77,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
-    List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<>(selections.size());
-        for (int i = 0; i < selections.size(); i++) {
-            items.add(selections.keyAt(i));
+    public List<Integer> getSelectedItems() {
+        List<Integer> selected = new ArrayList<>();
+        for (int i = 0; i < getItemCount(); i++) {
+            if (selections.get(i)) {
+                selected.add(i);
+            }
         }
-        return items;
+        return selected;
     }
 
-    void removeItem(int pos) {
+    public void remove(int pos) {
         items.remove(pos);
         notifyItemRemoved(pos);
     }
+
 
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -99,7 +107,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         void bind(final Item item, final ItemsAdapterListener listener, final int position, final boolean selected) {
             name.setText(item.getName());
-            price.setText(String.valueOf(item.getPrice()));
+            price.setText(String.valueOf(item.getPrice()) + "\t" + "\u20BD");
+            if (item.getType().equals(Item.TYPE_INCOME)) {
+                price.setTextColor(itemView.getContext().getResources().getColor(R.color.apple_green));
+            }
             itemView.setSelected(selected);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

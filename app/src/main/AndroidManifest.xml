@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher_2"
@@ -14,10 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_2_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
         <activity
             android:name=".MainActivity"
-            android:label="@string/main_screen_title">
+            android:label="@string/main_screen_title"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +29,13 @@
         </activity>
         <activity
             android:name=".AddActivity"
-            android:theme="@style/AddItemTheme" />
+            android:screenOrientation="portrait"
 
+            android:theme="@style/AddItemTheme" />
+        <activity
+            android:name=".AuthActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

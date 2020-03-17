@@ -1,4 +1,6 @@
-package com.snik.loftmoney;
+package com.snik.loftmoney.adapter;
+
+import com.snik.loftmoney.model.Item;
 
 public interface ItemsAdapterListener {
     void onItemClick(Item item, int position);

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/auth_background"
+    tools:context=".AuthActivity">
+
+
+    <ImageView
+        android:id="@+id/auth_icon"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="330dp"
+        android:src="@drawable/ic_launcher_foreground_2"
+        app:layout_constraintBottom_toTopOf="@+id/auth_name"
+        app:layout_constraintEnd_toEndOf="@+id/auth_name"
+        app:layout_constraintStart_toStartOf="@+id/auth_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.947"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/auth_name"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="270dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/auth_name"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
+        app:layout_constraintStart_toStartOf="@+id/sign_in_button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="330dp" />
+
+
+    <Button
+
+        android:id="@+id/sign_in_button"
+        android:layout_width="170dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="185dp"
+        android:background="@drawable/rounded_button"
+        android:drawableStart="@drawable/logo"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
+        android:text="@string/sign"
+        android:textColor="#3574fa" />
+
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:text="@string/version_project"
+        android:textColor="#59ffffff"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+</RelativeLayout>
